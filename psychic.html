@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Psychic Game</title>
+
+</head>
+<body>
+    
+
+
+<h1>Take A Guess</h1>
+
+<fieldset>
+  <p>Are you psychic? Take the psychic powers test and find out. You get 10 tries, and the few guesses it takes, the stronger your psychic abilities.</p>
+
+  <input type="text" id="guessInput" placeholder=" Guess 1 thru 100 "><br>
+
+<button onclick="checkGuess();">Guess</button>
+<button onclick="clearFields();">Reset</button>    
+</fieldset>
+
+<fieldset>
+  <p>Your current status:</p>
+  <output id="status_output">You have yet to guess anything.</output>    
+</fieldset> 
+
+<script>
+var randomNumber = Math.floor(Math.random() * 100) + 1;
+//cache reference to the status output element
+
+var statusOutput = document.getElementById('status_output');
+//cache reference to the guess input field
+var guessInput = document.getElementById('guessInput');
+//start with 0 counter variable
+var counter = 0;
+
+
+function checkGuess() {
+
+  var guessVal = parseInt(guessInput.value);
+  
+  if (counter < 10 && guessVal) {
+    //add 1 to counter variable
+    counter++;
+    if (guessVal < randomNumber) {
+      //change the status text
+      statusOutput.value = "Too small! Guess again.";
+    }
+    if (guessVal > randomNumber) {
+      //change the status text
+      statusOutput.value = "Too large! Guess again.";
+    }
+    if (guessVal === randomNumber) {
+      //change the status text
+      statusOutput.value = "You guessed the correct number! It was " + randomNumber + "."
+      +  " It only took you " + counter + " tries to get right.";
+    }
+  }
+  //if counter has reached 10
+  //10 tries have occurred and user couldn't guess correctly
+  else if (counter === 10) {
+    //update the status
+    statusOutput.value = "You are not psychic! The number was " + randomNumber;
+  }
+    //puts function out of call stack
+    return false;
+}
+
+/* Clear/Reset the text field */    
+function clearFields() {
+  //reset guess value
+  guessInput.value = "";
+  //reset counter variable to 0
+  counter = 0;
+  //reset the text of status output back to the default text in the HTML
+  statusOutput.value = "You have yet to guess anything.";
+  //set randomNumber to be a new random number
+  randomNumber = Math.floor(Math.random() * 100) + 1;
+  //added to put function out of call stack
+  return false;
+}
+
+</script>
+</body>
+</html>
